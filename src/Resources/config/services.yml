@@ -1,0 +1,9 @@
+services:
+    huh.code_generator.manager.code_config:
+        class: HeimrichHannot\CodeGeneratorBundle\Manager\CodeConfigManager
+        arguments:
+            - "@contao.framework"
+    huh.code_generator.backend.code_config:
+        class: HeimrichHannot\CodeGeneratorBundle\Backend\CodeConfig
+        arguments:
+            - "@contao.framework"
