@@ -1,5 +1,5 @@
 {
-  "name": "heimrichhannot/contao-core-generator-bundle",
+  "name": "heimrichhannot/contao-code-generator-bundle",
   "type": "contao-bundle",
   "description": "This module offers comfortable code generation based on separated configurations for Contao.",
   "license": "LGPL-3.0-or-later",
