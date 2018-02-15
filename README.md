@@ -19,9 +19,3 @@ This module offers comfortable code generation based on separated configurations
     - limit to certain alphabets (numbers, capitals, ...)
     - add rules like "at least one number"
 - one-click-creation of an arbitrary number of codes
-
-### Module
-
-Name | Description
----- | ------------
-ModuleCodeGenerator | This backend module creates the codes.
