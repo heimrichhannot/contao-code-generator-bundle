@@ -3,7 +3,7 @@
 /**
  * Backend modules
  */
-$GLOBALS['BE_MOD']['devtools']['code_config'] = [
+$GLOBALS['BE_MOD']['system']['code_config'] = [
     'tables'   => ['tl_code_config'],
     'generate' => ['huh.code_generator.backend.code_config', 'generateBackendModule'],
 ];
