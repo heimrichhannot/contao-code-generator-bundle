@@ -5,7 +5,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
         'dataContainer'     => 'Table',
         'enableVersioning'  => true,
         'onload_callback'   => [
-            ['tl_code_config', 'modifyPalette']
+            ['huh.code_generator.backend.code_config', 'modifyPalette']
         ],
         'onsubmit_callback' => [
             ['huh.utils.dca', 'setDateAdded'],
@@ -161,7 +161,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
                 \HeimrichHannot\UtilsBundle\Code\CodeUtil::NUMBERS,
                 \HeimrichHannot\UtilsBundle\Code\CodeUtil::SPECIAL_CHARS
             ],
-            'reference' => &$GLOBALS['TL_LANG']['tl_code_config']['reference'],
+            'reference' => &$GLOBALS['TL_LANG']['tl_code_config']['reference']['alphabets'],
             'eval'      => ['mandatory' => true, 'multiple' => true, 'tl_class' => 'w50 clr', 'submitOnChange' => true],
             'sql'       => "blob NULL"
         ],
@@ -170,7 +170,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'exclude'          => true,
             'inputType'        => 'checkbox',
             'options_callback' => ['huh.code_generator.backend.code_config', 'getRulesAsOptions'],
-            'reference'        => &$GLOBALS['TL_LANG']['tl_code_config']['reference'],
+            'reference'        => &$GLOBALS['TL_LANG']['tl_code_config']['reference']['rules'],
             'eval'             => ['multiple' => true, 'tl_class' => 'w50'],
             'sql'              => "blob NULL"
         ],

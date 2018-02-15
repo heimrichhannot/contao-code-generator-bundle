@@ -19,12 +19,10 @@ class CodeConfig
 {
     public function generateBackendModule()
     {
-        $codeUtil  = System::getContainer()->get('huh.utils.code');
-        $manager = System::getContainer()->get('huh.code_generator.manager.code_config');
+        $codeUtil = System::getContainer()->get('huh.utils.code');
+        $manager  = System::getContainer()->get('huh.code_generator.manager.code_config');
 
-        if ($count = Input::get('count')
-                     && ($codeConfig = $manager->findByPk(Input::get('id'))) !== null
-        )
+        if (($count = Input::get('count')) && ($codeConfig = $manager->findByPk(Input::get('id'))) !== null)
         {
             $alphabets = StringUtil::deserialize($codeConfig->alphabets, true);
             $rules     = StringUtil::deserialize($codeConfig->rules, true);
@@ -86,7 +84,7 @@ class CodeConfig
     public function getRulesAsOptions(DataContainer $dc)
     {
         $ruleOptions = [];
-        $manager = System::getContainer()->get('huh.code_generator.manager.code_config');
+        $manager     = System::getContainer()->get('huh.code_generator.manager.code_config');
 
         if (($codeConfig = $manager->findByPk($dc->id)) !== null)
         {
@@ -112,9 +110,9 @@ class CodeConfig
 
     public function modifyPalette()
     {
-        $codeConfig    = System::getContainer()->get('huh.code_generator.manager.code_config')->findByPk(Input::get('id'));
-        $dca       = &$GLOBALS['TL_DCA']['tl_code_config'];
-        $alphabets = StringUtil::deserialize($codeConfig->alphabets, true);
+        $codeConfig = System::getContainer()->get('huh.code_generator.manager.code_config')->findByPk(Input::get('id'));
+        $dca        = &$GLOBALS['TL_DCA']['tl_code_config'];
+        $alphabets  = StringUtil::deserialize($codeConfig->alphabets, true);
 
         if (!in_array(CodeUtil::SPECIAL_CHARS, $alphabets))
         {
@@ -138,14 +136,15 @@ class CodeConfig
             $title,
             $GLOBALS['TL_LANG']['MSC']['codeGenerator']['codesPrompt'],
             $href,
-            'system/modules/code_generator/assets/img/generate.png'
+            'bundles/heimrichhannotcontaocodegenerator/img/generate.png'
         );
     }
 
     public function getDoubleTableFields(DataContainer $dc): array
     {
         if (null === ($codeConfig = System::getContainer()->get('huh.code_generator.manager.code_config')->findByPk($dc->id))
-            || !$codeConfig->doubleCodeTable)
+            || !$codeConfig->doubleCodeTable
+        )
         {
             return [];
         }

@@ -34,16 +34,20 @@ $lang['config_legend']  = 'Konfiguration';
  * References
  */
 $lang['reference'] = [
-    'oldValue'                                                 => 'Alter Wert',
-    'newValue'                                                 => 'Neuer Wert',
-    \HeimrichHannot\UtilsBundle\Code\CodeUtil::CAPITAL_LETTERS => 'Großbuchstaben',
-    \HeimrichHannot\UtilsBundle\Code\CodeUtil::SMALL_LETTERS   => 'Kleinbuchstaben',
-    \HeimrichHannot\UtilsBundle\Code\CodeUtil::NUMBERS         => 'Zahlen',
-    \HeimrichHannot\UtilsBundle\Code\CodeUtil::SPECIAL_CHARS   => 'Sonderzeichen',
-    \HeimrichHannot\UtilsBundle\Code\CodeUtil::CAPITAL_LETTERS => 'Mindestens einen Grossbuchstaben',
-    \HeimrichHannot\UtilsBundle\Code\CodeUtil::SMALL_LETTERS   => 'Mindestens einen Kleinbuchstaben',
-    \HeimrichHannot\UtilsBundle\Code\CodeUtil::NUMBERS         => 'Mindestens eine Zahl',
-    \HeimrichHannot\UtilsBundle\Code\CodeUtil::SPECIAL_CHARS   => 'Mindestens ein Sonderzeichen',
+    'oldValue'  => 'Alter Wert',
+    'newValue'  => 'Neuer Wert',
+    'alphabets' => [
+        \HeimrichHannot\UtilsBundle\Code\CodeUtil::CAPITAL_LETTERS => 'Großbuchstaben',
+        \HeimrichHannot\UtilsBundle\Code\CodeUtil::SMALL_LETTERS   => 'Kleinbuchstaben',
+        \HeimrichHannot\UtilsBundle\Code\CodeUtil::NUMBERS         => 'Zahlen',
+        \HeimrichHannot\UtilsBundle\Code\CodeUtil::SPECIAL_CHARS   => 'Sonderzeichen',
+    ],
+    'rules'     => [
+        \HeimrichHannot\UtilsBundle\Code\CodeUtil::CAPITAL_LETTERS => 'Mindestens einen Grossbuchstaben',
+        \HeimrichHannot\UtilsBundle\Code\CodeUtil::SMALL_LETTERS   => 'Mindestens einen Kleinbuchstaben',
+        \HeimrichHannot\UtilsBundle\Code\CodeUtil::NUMBERS         => 'Mindestens eine Zahl',
+        \HeimrichHannot\UtilsBundle\Code\CodeUtil::SPECIAL_CHARS   => 'Mindestens ein Sonderzeichen',
+    ]
 ];
 
 /**
