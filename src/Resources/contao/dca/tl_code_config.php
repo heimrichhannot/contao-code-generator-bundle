@@ -156,10 +156,10 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'exclude'   => true,
             'inputType' => 'checkbox',
             'options'   => [
-                \HeimrichHannot\UtilsBundle\Code\CodeUtil::CAPITAL_LETTERS,
-                \HeimrichHannot\UtilsBundle\Code\CodeUtil::SMALL_LETTERS,
-                \HeimrichHannot\UtilsBundle\Code\CodeUtil::NUMBERS,
-                \HeimrichHannot\UtilsBundle\Code\CodeUtil::SPECIAL_CHARS
+                \HeimrichHannot\UtilsBundle\Security\CodeUtil::CAPITAL_LETTERS,
+                \HeimrichHannot\UtilsBundle\Security\CodeUtil::SMALL_LETTERS,
+                \HeimrichHannot\UtilsBundle\Security\CodeUtil::NUMBERS,
+                \HeimrichHannot\UtilsBundle\Security\CodeUtil::SPECIAL_CHARS
             ],
             'reference' => &$GLOBALS['TL_LANG']['tl_code_config']['reference']['alphabets'],
             'eval'      => ['mandatory' => true, 'multiple' => true, 'tl_class' => 'w50 clr', 'submitOnChange' => true],

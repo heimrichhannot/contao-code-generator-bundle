@@ -37,16 +37,16 @@ $lang['reference'] = [
     'oldValue'  => 'Alter Wert',
     'newValue'  => 'Neuer Wert',
     'alphabets' => [
-        \HeimrichHannot\UtilsBundle\Code\CodeUtil::CAPITAL_LETTERS => 'Großbuchstaben',
-        \HeimrichHannot\UtilsBundle\Code\CodeUtil::SMALL_LETTERS   => 'Kleinbuchstaben',
-        \HeimrichHannot\UtilsBundle\Code\CodeUtil::NUMBERS         => 'Zahlen',
-        \HeimrichHannot\UtilsBundle\Code\CodeUtil::SPECIAL_CHARS   => 'Sonderzeichen',
+        \HeimrichHannot\UtilsBundle\Security\CodeUtil::CAPITAL_LETTERS => 'Großbuchstaben',
+        \HeimrichHannot\UtilsBundle\Security\CodeUtil::SMALL_LETTERS   => 'Kleinbuchstaben',
+        \HeimrichHannot\UtilsBundle\Security\CodeUtil::NUMBERS         => 'Zahlen',
+        \HeimrichHannot\UtilsBundle\Security\CodeUtil::SPECIAL_CHARS   => 'Sonderzeichen',
     ],
     'rules'     => [
-        \HeimrichHannot\UtilsBundle\Code\CodeUtil::CAPITAL_LETTERS => 'Mindestens einen Grossbuchstaben',
-        \HeimrichHannot\UtilsBundle\Code\CodeUtil::SMALL_LETTERS   => 'Mindestens einen Kleinbuchstaben',
-        \HeimrichHannot\UtilsBundle\Code\CodeUtil::NUMBERS         => 'Mindestens eine Zahl',
-        \HeimrichHannot\UtilsBundle\Code\CodeUtil::SPECIAL_CHARS   => 'Mindestens ein Sonderzeichen',
+        \HeimrichHannot\UtilsBundle\Security\CodeUtil::CAPITAL_LETTERS => 'Mindestens einen Grossbuchstaben',
+        \HeimrichHannot\UtilsBundle\Security\CodeUtil::SMALL_LETTERS   => 'Mindestens einen Kleinbuchstaben',
+        \HeimrichHannot\UtilsBundle\Security\CodeUtil::NUMBERS         => 'Mindestens eine Zahl',
+        \HeimrichHannot\UtilsBundle\Security\CodeUtil::SPECIAL_CHARS   => 'Mindestens ein Sonderzeichen',
     ]
 ];
 

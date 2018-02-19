@@ -13,7 +13,7 @@ use Contao\DataContainer;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
-use HeimrichHannot\UtilsBundle\Code\CodeUtil;
+use HeimrichHannot\UtilsBundle\Security\CodeUtil;
 
 class CodeConfig
 {
