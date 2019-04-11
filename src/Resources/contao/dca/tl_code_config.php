@@ -5,7 +5,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
         'dataContainer'     => 'Table',
         'enableVersioning'  => true,
         'onload_callback'   => [
-            ['huh.code_generator.backend.code_config', 'modifyPalette']
+            ['huh.code_generator.data_container.code_config_container', 'modifyPalette']
         ],
         'onsubmit_callback' => [
             ['huh.utils.dca', 'setDateAdded'],
@@ -64,7 +64,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'generate' => [
                 'label'           => &$GLOBALS['TL_LANG']['tl_code_config']['generate'],
                 'href'            => 'key=generate',
-                'button_callback' => ['huh.code_generator.backend.code_config', 'getGenerateButton']
+                'button_callback' => ['huh.code_generator.data_container.code_config_container', 'getGenerateButton']
             ]
         ]
     ],
@@ -142,7 +142,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'label'            => &$GLOBALS['TL_LANG']['tl_code_config']['doubleCodeTableField'],
             'exclude'          => true,
             'inputType'        => 'select',
-            'options_callback' => ['huh.code_generator.backend.code_config', 'getDoubleTableFields'],
+            'options_callback' => ['huh.code_generator.data_container.code_config_container', 'getDoubleTableFields'],
             'eval'             => [
                 'chosen'             => true,
                 'mandatory'          => true,
@@ -169,7 +169,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'label'            => &$GLOBALS['TL_LANG']['tl_code_config']['rules'],
             'exclude'          => true,
             'inputType'        => 'checkbox',
-            'options_callback' => ['huh.code_generator.backend.code_config', 'getRulesAsOptions'],
+            'options_callback' => ['huh.code_generator.data_container.code_config_container', 'getRulesAsOptions'],
             'reference'        => &$GLOBALS['TL_LANG']['tl_code_config']['reference']['rules'],
             'eval'             => ['multiple' => true, 'tl_class' => 'w50'],
             'sql'              => "blob NULL"

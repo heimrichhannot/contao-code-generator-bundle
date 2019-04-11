@@ -5,7 +5,7 @@
  */
 $GLOBALS['BE_MOD']['system']['code_config'] = [
     'tables'   => ['tl_code_config'],
-    'generate' => ['huh.code_generator.backend.code_config', 'generateBackendModule'],
+    'generate' => ['huh.code_generator.data_container.code_config_container', 'generateBackendModule'],
 ];
 
 /**

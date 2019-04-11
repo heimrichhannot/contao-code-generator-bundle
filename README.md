@@ -2,11 +2,11 @@
 
 This module offers comfortable code generation based on separated configurations for Contao.
 
-![alt Preview](docs/screenshot.png)
+![alt Preview](doc/screenshot.png)
 
 *Code config preview*
 
-![alt List view](docs/screenshot2.png)
+![alt List view](doc/screenshot2.png)
 
 *List view*
 
