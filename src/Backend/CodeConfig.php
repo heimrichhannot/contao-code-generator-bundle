@@ -20,7 +20,7 @@ class CodeConfig
     public function generateBackendModule()
     {
         $codeUtil = System::getContainer()->get('huh.utils.code');
-        $manager  = System::getContainer()->get('huh.code_generator.manager.code_config');
+        $manager  = System::getContainer()->get('huh.code_generator.manager.code_config_manager');
 
         if (($count = Input::get('count')) && ($codeConfig = $manager->findByPk(Input::get('id'))) !== null)
         {
@@ -84,7 +84,7 @@ class CodeConfig
     public function getRulesAsOptions(DataContainer $dc)
     {
         $ruleOptions = [];
-        $manager     = System::getContainer()->get('huh.code_generator.manager.code_config');
+        $manager     = System::getContainer()->get('huh.code_generator.manager.code_config_manager');
 
         if (($codeConfig = $manager->findByPk($dc->id)) !== null)
         {
@@ -110,7 +110,7 @@ class CodeConfig
 
     public function modifyPalette()
     {
-        $codeConfig = System::getContainer()->get('huh.code_generator.manager.code_config')->findByPk(Input::get('id'));
+        $codeConfig = System::getContainer()->get('huh.code_generator.manager.code_config_manager')->findByPk(Input::get('id'));
         $dca        = &$GLOBALS['TL_DCA']['tl_code_config'];
         $alphabets  = StringUtil::deserialize($codeConfig->alphabets, true);
 
@@ -142,7 +142,7 @@ class CodeConfig
 
     public function getDoubleTableFields(DataContainer $dc): array
     {
-        if (null === ($codeConfig = System::getContainer()->get('huh.code_generator.manager.code_config')->findByPk($dc->id))
+        if (null === ($codeConfig = System::getContainer()->get('huh.code_generator.manager.code_config_manager')->findByPk($dc->id))
             || !$codeConfig->doubleCodeTable
         )
         {
