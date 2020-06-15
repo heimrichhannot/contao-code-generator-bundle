@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2020-06-15
+- fixed missing dependency (utils-bundle)
+
 ## [1.2.0] - 2019-04-11
 
 ### Fixed
