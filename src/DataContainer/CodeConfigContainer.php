@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Copyright (c) 2020 Heimrich & Hannot GmbH
+ *
+ * @license LGPL-3.0-or-later
+ */
+
 namespace HeimrichHannot\CodeGeneratorBundle\DataContainer;
 
 use Contao\DataContainer;
@@ -33,7 +39,7 @@ class CodeConfigContainer
         $this->container = $container;
 
         $this->codeConfigModelAdapter = $this->container->get('contao.framework')->getAdapter(ConfigModel::class);
-        $this->request                = $this->container->get('huh.request');
+        $this->request = $this->container->get('huh.request');
     }
 
     public function generateBackendModule()
@@ -50,7 +56,7 @@ class CodeConfigContainer
 
         System::getContainer()->get('huh.utils.file')->sendTextAsFileToBrowser(
             implode("\n", $codes),
-            'codes_' . date('Y-m-d-H-i') . '.txt'
+            'codes_'.date('Y-m-d-H-i').'.txt'
         );
     }
 
@@ -58,17 +64,17 @@ class CodeConfigContainer
     {
         $ruleOptions = [];
 
-        if (($codeConfig = $this->codeConfigModelAdapter->findByPk($dc->id)) !== null) {
+        if (null !== ($codeConfig = $this->codeConfigModelAdapter->findByPk($dc->id))) {
             $alphabets = StringUtil::deserialize($codeConfig->alphabets, true);
-            $types     = [
+            $types = [
                 CodeUtil::CAPITAL_LETTERS,
                 CodeUtil::SMALL_LETTERS,
                 CodeUtil::NUMBERS,
-                CodeUtil::SPECIAL_CHARS
+                CodeUtil::SPECIAL_CHARS,
             ];
 
             foreach ($types as $type) {
-                if (in_array($type, $alphabets)) {
+                if (\in_array($type, $alphabets)) {
                     $ruleOptions[] = $type;
                 }
             }
@@ -80,10 +86,10 @@ class CodeConfigContainer
     public function modifyPalette()
     {
         $codeConfig = $this->codeConfigModelAdapter->findByPk(Input::get('id'));
-        $dca        = &$GLOBALS['TL_DCA']['tl_code_config'];
-        $alphabets  = StringUtil::deserialize($codeConfig->alphabets, true);
+        $dca = &$GLOBALS['TL_DCA']['tl_code_config'];
+        $alphabets = StringUtil::deserialize($codeConfig->alphabets, true);
 
-        if (!in_array(CodeUtil::SPECIAL_CHARS, $alphabets)) {
+        if (!\in_array(CodeUtil::SPECIAL_CHARS, $alphabets)) {
             $dca['palettes']['default'] = str_replace('allowedSpecialChars', '', $dca['palettes']['default']);
         }
 
@@ -98,7 +104,7 @@ class CodeConfigContainer
 
         return sprintf(
             "<a href=\"%s\" title=\"%s\" onclick=\"count=prompt('%s', '');"
-            . "if (count) {self.location.href='/%s&count=' + count;} return false;\"><img src=\"%s\"></a>",
+            ."if (count) {self.location.href='/%s&count=' + count;} return false;\"><img src=\"%s\"></a>",
             $href,
             $title,
             $GLOBALS['TL_LANG']['MSC']['codeGenerator']['codesPrompt'],
@@ -117,7 +123,7 @@ class CodeConfigContainer
 
         return \Contao\System::getContainer()->get('huh.utils.choice.field')->getCachedChoices(
             [
-                'dataContainer' => $codeConfig->doubleCodeTable
+                'dataContainer' => $codeConfig->doubleCodeTable,
             ]
         );
     }

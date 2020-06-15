@@ -1,18 +1,15 @@
 <?php
 
 /*
- * Copyright (c) 2018 Heimrich & Hannot GmbH
+ * Copyright (c) 2020 Heimrich & Hannot GmbH
  *
  * @license LGPL-3.0-or-later
  */
 
 namespace HeimrichHannot\CodeGeneratorBundle\Manager;
 
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
 use Contao\StringUtil;
-use Contao\System;
 use HeimrichHannot\CodeGeneratorBundle\Model\ConfigModel;
-use HeimrichHannot\ListBundle\Model\ListConfigElementModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CodeGeneratorManager
@@ -38,17 +35,15 @@ class CodeGeneratorManager
     {
         $codeUtil = $this->container->get('huh.utils.code');
 
-        if (null === ($codeConfig = $this->codeConfigModelAdapter->findByPk($codeConfig)))
-        {
+        if (null === ($codeConfig = $this->codeConfigModelAdapter->findByPk($codeConfig))) {
             return [];
         }
 
         $alphabets = StringUtil::deserialize($codeConfig->alphabets, true);
-        $rules     = StringUtil::deserialize($codeConfig->rules, true);
-        $codes     = [];
+        $rules = StringUtil::deserialize($codeConfig->rules, true);
+        $codes = [];
 
-        for ($i = 0; $i < $count; $i++)
-        {
+        for ($i = 0; $i < $count; ++$i) {
             $code = $codeUtil->generate(
                 $codeConfig->length,
                 $codeConfig->preventAmbiguous,
@@ -57,17 +52,14 @@ class CodeGeneratorManager
                 $codeConfig->allowedSpecialChars
             );
 
-            if ($codeConfig->preventDoubleCodes)
-            {
+            if ($codeConfig->preventDoubleCodes) {
                 $found = false;
 
-                if ($codeConfig->doubleCodeTable && $codeConfig->doubleCodeTableField)
-                {
+                if ($codeConfig->doubleCodeTable && $codeConfig->doubleCodeTableField) {
                     $found = $this->codeExistsInTable($code, $codeConfig->doubleCodeTable, $codeConfig->doubleCodeTableField);
                 }
 
-                while (in_array($code, $codes) || $found)
-                {
+                while (\in_array($code, $codes) || $found) {
                     $code = $codeUtil->generate(
                         $codeConfig->length,
                         $codeConfig->preventAmbiguous,
@@ -78,8 +70,7 @@ class CodeGeneratorManager
 
                     $found = false;
 
-                    if ($codeConfig->doubleCodeTable && $codeConfig->doubleCodeTableField)
-                    {
+                    if ($codeConfig->doubleCodeTable && $codeConfig->doubleCodeTableField) {
                         $found = $this->codeExistsInTable($code, $codeConfig->doubleCodeTable, $codeConfig->doubleCodeTableField);
                     }
                 }
