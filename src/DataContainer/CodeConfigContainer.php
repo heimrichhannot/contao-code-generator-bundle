@@ -109,7 +109,7 @@ class CodeConfigContainer
             $title,
             $GLOBALS['TL_LANG']['MSC']['codeGenerator']['codesPrompt'],
             $href,
-            'bundles/heimrichhannotcontaocodegenerator/img/generate.png'
+            'bundles/contaocodegenerator/img/generate.png'
         );
     }
 

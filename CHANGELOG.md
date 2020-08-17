@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.3] - 2020-08-17
+- fixed generator icon
+
 ## [1.2.2] - 2020-08-17
 - added generator icon
 
