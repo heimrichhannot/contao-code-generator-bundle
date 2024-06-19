@@ -8,14 +8,6 @@
     "contao/core-bundle": "^4.4",
     "heimrichhannot/contao-utils-bundle": "^2.164"
   },
-  "require-dev": {
-    "contao/manager-plugin": "^2.0",
-    "friendsofphp/php-cs-fixer": "^2.2",
-    "phpunit/phpunit": "^6.0",
-    "satooshi/php-coveralls": "^1.0",
-    "contao/test-case": "^1.1",
-    "php-http/guzzle6-adapter": "^1.1"
-  },
   "autoload": {
     "psr-4": {
       "HeimrichHannot\\CodeGeneratorBundle\\": "src/"
@@ -29,14 +21,6 @@
       "src/Resources/contao/languages/",
       "src/Resources/contao/templates/"
     ]
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "HeimrichHannot\\CodeGeneratorBundle\\Test\\": "tests/"
-    }
-  },
-  "config": {
-    "preferred-install": "dist"
   },
   "extra": {
     "contao-manager-plugin": "HeimrichHannot\\CodeGeneratorBundle\\ContaoManager\\Plugin"
