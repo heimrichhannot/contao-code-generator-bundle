@@ -9,13 +9,11 @@
 namespace HeimrichHannot\CodeGeneratorBundle\DataContainer;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
-use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\Database;
 use Contao\DataContainer;
-use Contao\Input;
 use Contao\RequestToken;
 use Contao\StringUtil;
-use HeimrichHannot\CodeGeneratorBundle\Manager\CodeGeneratorManager;
+use HeimrichHannot\CodeGeneratorBundle\Code\Generator;
 use HeimrichHannot\CodeGeneratorBundle\Model\ConfigModel;
 use HeimrichHannot\UtilsBundle\Security\CodeUtil;
 use HeimrichHannot\UtilsBundle\Util\Utils;
@@ -30,8 +28,8 @@ class CodeConfigContainer
 
     public function __construct(
         private readonly RequestStack $requestStack,
-        private readonly CodeGeneratorManager $codeGeneratorManager,
         private readonly Utils $utils,
+        private readonly Generator $generator
     )
     {
     }
@@ -94,9 +92,13 @@ class CodeConfigContainer
         }
 
         $count = intval($request->query->get('count'));
-        $id = intval($request->query->get('id'));
+        $config = ConfigModel::findByPk(intval($request->query->get('id')));
 
-        $codes = $this->codeGeneratorManager->getCodesByConfig($id, $count);
+        if (!$config) {
+            return;
+        }
+
+        $codes = $this->generator->generateMultipleFromConfig($config, $count);
 
         if (empty($codes)) {
             return;
