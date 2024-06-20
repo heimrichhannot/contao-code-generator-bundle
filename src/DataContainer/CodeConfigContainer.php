@@ -8,53 +8,101 @@
 
 namespace HeimrichHannot\CodeGeneratorBundle\DataContainer;
 
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
+use Contao\CoreBundle\ServiceAnnotation\Callback;
+use Contao\Database;
 use Contao\DataContainer;
 use Contao\Input;
+use Contao\RequestToken;
 use Contao\StringUtil;
-use Contao\System;
+use HeimrichHannot\CodeGeneratorBundle\Manager\CodeGeneratorManager;
 use HeimrichHannot\CodeGeneratorBundle\Model\ConfigModel;
-use HeimrichHannot\Request\Request;
 use HeimrichHannot\UtilsBundle\Security\CodeUtil;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use HeimrichHannot\UtilsBundle\Util\Utils;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class CodeConfigContainer
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    public const CAPITAL_LETTERS = 'capitalLetters';
+    public const SMALL_LETTERS = 'smallLetters';
+    public const NUMBERS = 'numbers';
+    public const SPECIAL_CHARS = 'specialChars';
 
-    /**
-     * @var ConfigModel
-     */
-    protected $codeConfigModelAdapter;
-
-    /**
-     * @var Request
-     */
-    protected $request;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(
+        private readonly RequestStack $requestStack,
+        private readonly CodeGeneratorManager $codeGeneratorManager,
+        private readonly Utils $utils,
+    )
     {
-        $this->container = $container;
+    }
 
-        $this->codeConfigModelAdapter = $this->container->get('contao.framework')->getAdapter(ConfigModel::class);
-        $this->request = $this->container->get('huh.request');
+    #[AsCallback(table: 'tl_code_config', target: 'config.onload')]
+    public function onConfigLoadCallback(DataContainer $dc = null): void
+    {
+        if (!$dc || !$dc->id || !($codeConfig = ConfigModel::findByPk($dc->id))) {
+            return;
+        }
+
+        $dca = &$GLOBALS['TL_DCA']['tl_code_config'];
+        $alphabets = StringUtil::deserialize($codeConfig->alphabets, true);
+
+        if (!\in_array(CodeUtil::SPECIAL_CHARS, $alphabets)) {
+            $dca['palettes']['default'] = str_replace('allowedSpecialChars', '', $dca['palettes']['default']);
+        }
+
+        if (!$codeConfig->doubleCodeTable) {
+            $dca['subpalettes']['preventDoubleCodes'] = str_replace('doubleCodeTableField', '', $dca['subpalettes']['preventDoubleCodes']);
+        }
+    }
+
+    #[AsCallback(table: 'tl_code_config', target: 'fields.doubleCodeTable.options')]
+    public function onDoubleCodeTableOptionsCallback(DataContainer $dc = null): array
+    {
+        return Database::getInstance()->listTables();
+    }
+
+    #[AsCallback(table: 'tl_code_config', target: 'fields.doubleCodeTableField.options')]
+    public function onFieldsDoubleCodeTableFieldOptionsCallback(DataContainer $dc = null): array
+    {
+        if (!$dc
+            || !$dc->id
+            || null === ($codeConfig = ConfigModel::findByPk($dc->id))
+            || !$codeConfig->doubleCodeTable
+        ) {
+            return [];
+        }
+
+        $fields = $this->utils->dca()->getDcaFields($codeConfig->doubleCodeTable);
+        $options = [];
+        foreach ($fields as $field) {
+            $label = $GLOBALS['TL_DCA'][$codeConfig->doubleCodeTable]['fields'][$field]['label'][0] ?? null;
+
+            $options[$field] = $field . ($label
+                    ? ' <span style="display: inline; color:#999; padding-left:3px">[' . $label . ']</span>'
+                    : ''
+                );;
+        }
+
+        return $options;
     }
 
     public function generateBackendModule()
     {
-        if (!($count = $this->request->getGet('count')) || !($id = $this->request->getGet('id'))) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (!$request || !$request->query->has('count') || !$request->query->has('id')) {
             return;
         }
 
-        $codes = System::getContainer()->get('huh.code_generator.manager.code_generator_manager')->getCodesByConfig($id, $count);
+        $count = intval($request->query->get('count'));
+        $id = intval($request->query->get('id'));
+
+        $codes = $this->codeGeneratorManager->getCodesByConfig($id, $count);
 
         if (empty($codes)) {
             return;
         }
 
-        System::getContainer()->get('huh.utils.file')->sendTextAsFileToBrowser(
+        $this->sendTextAsFileToBrowser(
             implode("\n", $codes),
             'codes_'.date('Y-m-d-H-i').'.txt'
         );
@@ -64,7 +112,7 @@ class CodeConfigContainer
     {
         $ruleOptions = [];
 
-        if (null !== ($codeConfig = $this->codeConfigModelAdapter->findByPk($dc->id))) {
+        if (null !== ($codeConfig = ConfigModel::findByPk($dc->id))) {
             $alphabets = StringUtil::deserialize($codeConfig->alphabets, true);
             $types = [
                 CodeUtil::CAPITAL_LETTERS,
@@ -83,24 +131,9 @@ class CodeConfigContainer
         return $ruleOptions;
     }
 
-    public function modifyPalette()
-    {
-        $codeConfig = $this->codeConfigModelAdapter->findByPk(Input::get('id'));
-        $dca = &$GLOBALS['TL_DCA']['tl_code_config'];
-        $alphabets = StringUtil::deserialize($codeConfig->alphabets, true);
-
-        if (!\in_array(CodeUtil::SPECIAL_CHARS, $alphabets)) {
-            $dca['palettes']['default'] = str_replace('allowedSpecialChars', '', $dca['palettes']['default']);
-        }
-
-        if (!$codeConfig->doubleCodeTable) {
-            $dca['subpalettes']['preventDoubleCodes'] = str_replace('doubleCodeTableField', '', $dca['subpalettes']['preventDoubleCodes']);
-        }
-    }
-
     public function getGenerateButton(array $row, string $key, string $label, string $title)
     {
-        $href = sprintf('contao/main.php?do=code_config&%s&id=%s&rt=%s', $key, $row['id'], \RequestToken::get());
+        $href = sprintf('contao?do=code_config&%s&id=%s&rt=%s', $key, $row['id'], RequestToken::get());
 
         return sprintf(
             "<a href=\"%s\" title=\"%s\" onclick=\"count=prompt('%s', '');"
@@ -113,18 +146,13 @@ class CodeConfigContainer
         );
     }
 
-    public function getDoubleTableFields(DataContainer $dc): array
+    private function sendTextAsFileToBrowser(string $content, string $fileName): never
     {
-        if (null === ($codeConfig = $this->codeConfigModelAdapter->findByPk($dc->id))
-            || !$codeConfig->doubleCodeTable
-        ) {
-            return [];
-        }
+        header('Content-Disposition: attachment; filename="'.$fileName.'"');
+        header('Content-Type: text/plain');
+        header('Connection: close');
+        echo $content;
 
-        return \Contao\System::getContainer()->get('huh.utils.choice.field')->getCachedChoices(
-            [
-                'dataContainer' => $codeConfig->doubleCodeTable,
-            ]
-        );
+        exit();
     }
 }

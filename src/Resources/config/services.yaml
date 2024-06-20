@@ -1,0 +1,17 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  HeimrichHannot\CodeGeneratorBundle\:
+    resource: '../../{DataContainer,Manager}/*'
+
+  HeimrichHannot\CodeGeneratorBundle\Code\Generator: ~
+
+  huh.code_generator.manager.code_generator_manager:
+    alias: HeimrichHannot\CodeGeneratorBundle\Manager\CodeGeneratorManager
+    public: true
+    deprecated:
+      package: 'heimrichhannot/contao-code-generator-bundle'
+      version: '1.3'
+      message: The "%alias_id%" service is deprecated since heimrichhannot/contao-code-generator-bundle 1.3 and will be removed in 2.0.

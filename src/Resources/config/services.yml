@@ -1,7 +1,0 @@
-services:
-  _defaults:
-    autowire: true
-    public: true
-
-  huh.code_generator.manager.code_generator_manager:
-    class: HeimrichHannot\CodeGeneratorBundle\Manager\CodeGeneratorManager

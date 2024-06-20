@@ -3,9 +3,12 @@
 /**
  * Backend modules
  */
+
+use HeimrichHannot\CodeGeneratorBundle\DataContainer\CodeConfigContainer;
+
 $GLOBALS['BE_MOD']['system']['code_config'] = [
     'tables'   => ['tl_code_config'],
-    'generate' => ['huh.code_generator.data_container.code_config_container', 'generateBackendModule'],
+    'generate' => [CodeConfigContainer::class, 'generateBackendModule'],
 ];
 
 /**
