@@ -11,11 +11,9 @@ namespace HeimrichHannot\CodeGeneratorBundle\DataContainer;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\Database;
 use Contao\DataContainer;
-use Contao\RequestToken;
 use Contao\StringUtil;
 use HeimrichHannot\CodeGeneratorBundle\Code\Generator;
 use HeimrichHannot\CodeGeneratorBundle\Model\ConfigModel;
-use HeimrichHannot\UtilsBundle\Security\CodeUtil;
 use HeimrichHannot\UtilsBundle\Util\Utils;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -44,7 +42,7 @@ class CodeConfigContainer
         $dca = &$GLOBALS['TL_DCA']['tl_code_config'];
         $alphabets = StringUtil::deserialize($codeConfig->alphabets, true);
 
-        if (!\in_array(CodeUtil::SPECIAL_CHARS, $alphabets)) {
+        if (!\in_array(static::SPECIAL_CHARS, $alphabets)) {
             $dca['palettes']['default'] = str_replace('allowedSpecialChars', '', $dca['palettes']['default']);
         }
 
@@ -117,10 +115,10 @@ class CodeConfigContainer
         if (null !== ($codeConfig = ConfigModel::findByPk($dc->id))) {
             $alphabets = StringUtil::deserialize($codeConfig->alphabets, true);
             $types = [
-                CodeUtil::CAPITAL_LETTERS,
-                CodeUtil::SMALL_LETTERS,
-                CodeUtil::NUMBERS,
-                CodeUtil::SPECIAL_CHARS,
+                static::CAPITAL_LETTERS,
+                static::SMALL_LETTERS,
+                static::NUMBERS,
+                static::SPECIAL_CHARS,
             ];
 
             foreach ($types as $type) {
@@ -135,7 +133,9 @@ class CodeConfigContainer
 
     public function getGenerateButton(array $row, string $key, string $label, string $title)
     {
-        $href = sprintf('contao?do=code_config&%s&id=%s&rt=%s', $key, $row['id'], RequestToken::get());
+        $href = $this->utils->routing()->generateBackendRoute(
+            ['do' => 'code_config', 'id' => $row['id']]
+        );
 
         return sprintf(
             "<a href=\"%s\" title=\"%s\" onclick=\"count=prompt('%s', '');"

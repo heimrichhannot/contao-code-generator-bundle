@@ -1,5 +1,6 @@
 <?php
 
+use Contao\DC_Table;
 use HeimrichHannot\CodeGeneratorBundle\DataContainer\CodeConfigContainer;
 use HeimrichHannot\UtilsBundle\Dca\DateAddedField;
 
@@ -7,7 +8,7 @@ DateAddedField::register('tl_code_config');
 
 $GLOBALS['TL_DCA']['tl_code_config'] = [
     'config'      => [
-        'dataContainer'     => 'Table',
+        'dataContainer'     => DC_Table::class,
         'enableVersioning'  => true,
         'sql'               => [
             'keys' => [
