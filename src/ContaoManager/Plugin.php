@@ -36,6 +36,6 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
      */
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {
-        $loader->load('@ContaoCodeGeneratorBundle/Resources/config/services.yaml');
+        $loader->load('@ContaoCodeGeneratorBundle/config/services.yaml');
     }
 }
