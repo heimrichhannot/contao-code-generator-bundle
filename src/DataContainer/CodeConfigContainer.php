@@ -84,6 +84,8 @@ class CodeConfigContainer
 
     public function generateBackendModule()
     {
+        die();
+
         $request = $this->requestStack->getCurrentRequest();
         if (!$request || !$request->query->has('count') || !$request->query->has('id')) {
             return;
@@ -139,7 +141,7 @@ class CodeConfigContainer
 
         return sprintf(
             "<a href=\"%s\" title=\"%s\" onclick=\"count=prompt('%s', '');"
-            ."if (count) {self.location.href='/%s&count=' + count;} return false;\"><img src=\"%s\"></a>",
+            ."if (count) {self.location.href='%s&count=' + count;} return false;\"><img src=\"%s\"></a>",
             $href,
             $title,
             $GLOBALS['TL_LANG']['MSC']['codeGenerator']['codesPrompt'],

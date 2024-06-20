@@ -8,6 +8,9 @@ services:
 
   HeimrichHannot\CodeGeneratorBundle\Code\Generator: ~
 
+  HeimrichHannot\CodeGeneratorBundle\DataContainer\CodeConfigContainer:
+    public: true
+
   huh.code_generator.manager.code_generator_manager:
     alias: HeimrichHannot\CodeGeneratorBundle\Manager\CodeGeneratorManager
     public: true

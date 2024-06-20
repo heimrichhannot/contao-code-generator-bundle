@@ -5,6 +5,7 @@
  */
 
 use HeimrichHannot\CodeGeneratorBundle\DataContainer\CodeConfigContainer;
+use HeimrichHannot\CodeGeneratorBundle\Model\ConfigModel;
 
 $GLOBALS['BE_MOD']['system']['code_config'] = [
     'tables'   => ['tl_code_config'],
@@ -14,4 +15,4 @@ $GLOBALS['BE_MOD']['system']['code_config'] = [
 /**
  * Models
  */
-$GLOBALS['TL_MODELS']['tl_code_config'] = 'HeimrichHannot\CodeGeneratorBundle\Model\ConfigModel';
+$GLOBALS['TL_MODELS'][ConfigModel::getTable()] = ConfigModel::class;
