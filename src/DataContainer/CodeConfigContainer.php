@@ -35,6 +35,8 @@ class CodeConfigContainer
     #[AsCallback(table: 'tl_code_config', target: 'config.onload')]
     public function onConfigLoadCallback(DataContainer $dc = null): void
     {
+        $this->generateBackendModule();
+
         if (!$dc || !$dc->id || !($codeConfig = ConfigModel::findByPk($dc->id))) {
             return;
         }
@@ -84,8 +86,6 @@ class CodeConfigContainer
 
     public function generateBackendModule()
     {
-        die();
-
         $request = $this->requestStack->getCurrentRequest();
         if (!$request || !$request->query->has('count') || !$request->query->has('id')) {
             return;
