@@ -1,18 +1,15 @@
 <?php
 
+use Contao\DC_Table;
+use HeimrichHannot\CodeGeneratorBundle\DataContainer\CodeConfigContainer;
+use HeimrichHannot\UtilsBundle\Dca\DateAddedField;
+
+DateAddedField::register('tl_code_config');
+
 $GLOBALS['TL_DCA']['tl_code_config'] = [
     'config'      => [
-        'dataContainer'     => 'Table',
+        'dataContainer'     => DC_Table::class,
         'enableVersioning'  => true,
-        'onload_callback'   => [
-            ['huh.code_generator.data_container.code_config_container', 'modifyPalette']
-        ],
-        'onsubmit_callback' => [
-            ['huh.utils.dca', 'setDateAdded'],
-        ],
-        'oncopy_callback'   => [
-            ['huh.utils.dca', 'setDateAddedOnCopy'],
-        ],
         'sql'               => [
             'keys' => [
                 'id' => 'primary'
@@ -53,7 +50,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
                 'label'      => &$GLOBALS['TL_LANG']['tl_code_config']['delete'],
                 'href'       => 'act=delete',
                 'icon'       => 'delete.gif',
-                'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm']
+                'attributes' => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? '')
                                 . '\'))return false;Backend.getScrollOffset()"'
             ],
             'show'     => [
@@ -64,7 +61,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'generate' => [
                 'label'           => &$GLOBALS['TL_LANG']['tl_code_config']['generate'],
                 'href'            => 'key=generate',
-                'button_callback' => ['huh.code_generator.data_container.code_config_container', 'getGenerateButton']
+                'button_callback' => [CodeConfigContainer::class, 'getGenerateButton']
             ]
         ]
     ],
@@ -83,13 +80,6 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
         'tstamp'               => [
             'label' => &$GLOBALS['TL_LANG']['tl_code_config']['tstamp'],
             'sql'   => "int(10) unsigned NOT NULL default '0'"
-        ],
-        'dateAdded'            => [
-            'label'   => &$GLOBALS['TL_LANG']['MSC']['dateAdded'],
-            'sorting' => true,
-            'flag'    => 6,
-            'eval'    => ['rgxp' => 'datim', 'doNotCopy' => true],
-            'sql'     => "int(10) unsigned NOT NULL default '0'"
         ],
         'title'                => [
             'label'     => &$GLOBALS['TL_LANG']['tl_code_config']['title'],
@@ -126,10 +116,8 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'sql'       => "char(1) NOT NULL default ''"
         ],
         'doubleCodeTable'      => [
-            'label'            => &$GLOBALS['TL_LANG']['tl_code_config']['doubleCodeTable'],
             'exclude'          => true,
             'inputType'        => 'select',
-            'options_callback' => ['huh.utils.choice.data_container', 'getCachedChoices'],
             'eval'             => [
                 'chosen'             => true,
                 'submitOnChange'     => true,
@@ -139,10 +127,8 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'sql'              => "varchar(255) NOT NULL default ''"
         ],
         'doubleCodeTableField' => [
-            'label'            => &$GLOBALS['TL_LANG']['tl_code_config']['doubleCodeTableField'],
             'exclude'          => true,
             'inputType'        => 'select',
-            'options_callback' => ['huh.code_generator.data_container.code_config_container', 'getDoubleTableFields'],
             'eval'             => [
                 'chosen'             => true,
                 'mandatory'          => true,
@@ -152,14 +138,13 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'sql'              => "varchar(255) NOT NULL default ''"
         ],
         'alphabets'            => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_code_config']['alphabets'],
             'exclude'   => true,
             'inputType' => 'checkbox',
             'options'   => [
-                \HeimrichHannot\UtilsBundle\Security\CodeUtil::CAPITAL_LETTERS,
-                \HeimrichHannot\UtilsBundle\Security\CodeUtil::SMALL_LETTERS,
-                \HeimrichHannot\UtilsBundle\Security\CodeUtil::NUMBERS,
-                \HeimrichHannot\UtilsBundle\Security\CodeUtil::SPECIAL_CHARS
+                CodeConfigContainer::CAPITAL_LETTERS,
+                CodeConfigContainer::SMALL_LETTERS,
+                CodeConfigContainer::NUMBERS,
+                CodeConfigContainer::SPECIAL_CHARS
             ],
             'reference' => &$GLOBALS['TL_LANG']['tl_code_config']['reference']['alphabets'],
             'eval'      => ['mandatory' => true, 'multiple' => true, 'tl_class' => 'w50 clr', 'submitOnChange' => true],
@@ -169,7 +154,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'label'            => &$GLOBALS['TL_LANG']['tl_code_config']['rules'],
             'exclude'          => true,
             'inputType'        => 'checkbox',
-            'options_callback' => ['huh.code_generator.data_container.code_config_container', 'getRulesAsOptions'],
+            'options_callback' => [CodeConfigContainer::class, 'getRulesAsOptions'],
             'reference'        => &$GLOBALS['TL_LANG']['tl_code_config']['reference']['rules'],
             'eval'             => ['multiple' => true, 'tl_class' => 'w50'],
             'sql'              => "blob NULL"

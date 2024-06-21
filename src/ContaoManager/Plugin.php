@@ -24,7 +24,7 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
     /**
      * {@inheritdoc}
      */
-    public function getBundles(ParserInterface $parser)
+    public function getBundles(ParserInterface $parser): array
     {
         return [
             BundleConfig::create(ContaoCodeGeneratorBundle::class)->setLoadAfter([ContaoCoreBundle::class]),
@@ -34,9 +34,8 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
     /**
      * {@inheritdoc}
      */
-    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
+    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {
-        $loader->load('@ContaoCodeGeneratorBundle/Resources/config/services.yml');
-        $loader->load('@ContaoCodeGeneratorBundle/Resources/config/datacontainers.yml');
+        $loader->load('@ContaoCodeGeneratorBundle/config/services.yaml');
     }
 }

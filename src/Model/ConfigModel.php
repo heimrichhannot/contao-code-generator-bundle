@@ -10,6 +10,16 @@ namespace HeimrichHannot\CodeGeneratorBundle\Model;
 
 use Contao\Model;
 
+/**
+ * @property int    $id
+ * @property string $tstamp
+ * @property bool $preventAmbiguous
+ * @property int $length
+ * @property bool $preventDoubleCodes
+ * @property array|string $alphabets
+ * @property array|string $rules
+ * @property string $allowedSpecialChars
+ */
 class ConfigModel extends Model
 {
     protected static $strTable = 'tl_code_config';

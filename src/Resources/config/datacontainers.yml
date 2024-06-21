@@ -1,7 +1,0 @@
-services:
-  _defaults:
-    autowire: true
-    public: true
-
-  huh.code_generator.data_container.code_config_container:
-    class: HeimrichHannot\CodeGeneratorBundle\DataContainer\CodeConfigContainer
