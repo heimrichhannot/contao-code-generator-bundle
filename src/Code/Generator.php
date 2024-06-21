@@ -51,7 +51,7 @@ class Generator
                 }
 
                 while (\in_array($code, $codes) || $found) {
-                    $code = $codeUtil->generate($criteria);
+                    $code = $this->generate($criteria);
 
                     $found = false;
 
