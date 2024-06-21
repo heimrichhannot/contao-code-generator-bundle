@@ -2,6 +2,7 @@
 
 namespace HeimrichHannot\CodeGeneratorBundle\Code;
 
+use Contao\Model;
 use Contao\StringUtil;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use Hackzilla\PasswordGenerator\Generator\RequirementPasswordGenerator;
@@ -94,6 +95,7 @@ class Generator
 
     private function codeExistsInTable(string $code, string $table, string $field)
     {
-        return null !== ConfigModel::findBy(["$table.$field=?"], [$code]);
+        $modelClass = Model::getClassFromTable($table);
+        return null !== $modelClass::findBy(["$table.$field=?"], [$code]);
     }
 }

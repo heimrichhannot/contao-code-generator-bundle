@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.1] - 2024-06-21
+- Fixed: issue with code generation
+
 ## [1.3.0] - 2024-06-21
 - Added: password generation service ([#3](https://github.com/heimrichhannot/contao-code-generator-bundle/pull/3))
 - Changed: require PHP 8.1 or newer ([#3](https://github.com/heimrichhannot/contao-code-generator-bundle/pull/3))
