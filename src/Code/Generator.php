@@ -32,7 +32,8 @@ class Generator
         if ($criteria->requireNumbers) $generator->setMinimumCount(RequirementPasswordGenerator::OPTION_NUMBERS, 1);
         if ($criteria->requireSymbols) $generator->setMinimumCount(RequirementPasswordGenerator::OPTION_SYMBOLS, 1);
 
-        return $generator->generatePassword();
+        $password = $generator->generatePassword();
+        return $criteria->prefix . $password . $criteria->suffix;
     }
 
     public function generateMultipleFromConfig(ConfigModel $codeConfig, int $count): array
@@ -90,6 +91,13 @@ class Generator
         if (!empty(trim($codeConfig->allowedSpecialChars))) {
             $criteria->allowedSymbols = $codeConfig->allowedSpecialChars;
         }
+        if (!empty(trim($codeConfig->prefix))) {
+            $criteria->prefix = $codeConfig->prefix;
+        }
+        if (!empty(trim($codeConfig->suffix))) {
+            $criteria->prefix = $codeConfig->suffix;
+        }
+
         return $criteria;
     }
 

@@ -19,6 +19,10 @@ use Contao\Model;
  * @property array|string $alphabets
  * @property array|string $rules
  * @property string $allowedSpecialChars
+ * @property string $doubleCodeTable
+ * @property string $doubleCodeTableField
+ * @property string $prefix
+ * @property string $suffix
  */
 class ConfigModel extends Model
 {

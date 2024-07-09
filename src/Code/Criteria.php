@@ -18,4 +18,12 @@ class Criteria
     public bool $requireLowerCase = false;
     public bool $requireNumbers = false;
     public bool $requireSymbols = false;
+    /**
+     * @var string Prefix to add to the generated code. Not counted to code length
+     */
+    public string $prefix = '';
+    /**
+     * @var string Suffix to add to the generated code. Not counted to code length
+     */
+    public string $suffix = '';
 }

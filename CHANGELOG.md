@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2024-07-09
+- Added: prefix and suffix functionality for codes
+
 ## [1.3.1] - 2024-06-21
 - Fixed: issue with code generation
 

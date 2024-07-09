@@ -67,7 +67,7 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
     ],
     'palettes'    => [
         '__selector__' => ['preventDoubleCodes'],
-        'default'      => '{general_legend},title;{config_legend},length,preventAmbiguous,preventDoubleCodes,alphabets,rules,allowedSpecialChars;'
+        'default'      => '{general_legend},title;{config_legend},length,preventAmbiguous,preventDoubleCodes,alphabets,rules,allowedSpecialChars,prefix,suffix;'
     ],
     'subpalettes' => [
         'preventDoubleCodes' => 'doubleCodeTable,doubleCodeTableField',
@@ -166,6 +166,18 @@ $GLOBALS['TL_DCA']['tl_code_config'] = [
             'default'   => '[=<>()#/]',
             'eval'      => ['tl_class' => 'w50 clr'],
             'sql'       => "varchar(255) NOT NULL default ''"
-        ]
+        ],
+        'prefix' => [
+            'inputType' => 'text',
+            'exclude'   => true,
+            'eval'      => ['tl_class' => 'w50 clr', 'maxlength' => 16],
+            'sql'       => "varchar(16) NOT NULL default ''"
+        ],
+        'suffix' => [
+            'inputType' => 'text',
+            'exclude'   => true,
+            'eval'      => ['tl_class' => 'w50', 'maxlength' => 16],
+            'sql'       => "varchar(16) NOT NULL default ''"
+        ],
     ]
 ];

@@ -25,6 +25,10 @@ $lang['rules'][1] =
     'Bitte geben Sie die Regeln an, die für die Codes gelten sollen. WICHTIG: Für eine solche Bedingung muss das entsprechende Alphabet aktiv sein.';
 $lang['allowedSpecialChars'][0] = 'Erlaubte Sonderzeichen';
 $lang['allowedSpecialChars'][1] = 'Bitte geben Sie eine kommagetrennte Liste der erlaubten Sonderzeichen ein.';
+$lang['prefix'][0] = 'Präfix';
+$lang['prefix'][1] = 'Geben Sie hier ein Präfix ein, das vor den Code gesetzt wird. Die Länge des Präfixes wird nicht zur Codelänge hinzugezählt.';
+$lang['suffix'][0] = 'Suffix';
+$lang['suffix'][1] = 'Geben Sie hier ein Suffix ein, das nach den Code gesetzt wird. Die Länge des Suffixes wird nicht zur Codelänge hinzugezählt.';
 
 /**
  * Legends
